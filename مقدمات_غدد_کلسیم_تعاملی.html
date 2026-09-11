@@ -117,4 +117,5 @@ function vote(i){if(localStorage.getItem("endo_voted")){document.getElementById(
 function bars(){let total=S.votes.reduce((a,b)=>a+b,0);document.getElementById("bars").innerHTML=S.votes.map((v,i)=>{let p=total?Math.round(v*100/total):0;return '<div class="barrow"><span>'+["😍","😊","😐","😕","😡"][i]+'</span><div class="bar"><i style="width:'+p+'%"></i></div><span>'+p+'٪</span></div>'}).join("")}
 renderQuiz();update();bars();
 </script>
+<script src="highlight.js"></script>
 </body></html>
