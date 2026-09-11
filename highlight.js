@@ -1,4 +1,4 @@
-// کد قابلیت هایلایت با ۵ رنگ
+// کد قابلیت هایلایت با ۵ رنگ + حذف تکی با نگه داشتن
 document.addEventListener('DOMContentLoaded', function() {
     // ۱. ساخت نوار ابزار بالای صفحه
     const toolbar = document.createElement('div');
@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.color-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             activeColor = this.getAttribute('data-color');
-            // افکت بصری برای دکمه انتخاب شده
             document.querySelectorAll('.color-btn').forEach(b => b.style.transform = 'scale(1)');
             this.style.transform = 'scale(1.3)';
         });
@@ -41,6 +40,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedText = selection.toString().trim();
 
         if (selectedText.length > 0) {
+            // اگر روی یک متن هایلایت‌شده کلیک شده باشد، از هایلایت کردن مجدد خودداری کن
+            if (selection.anchorNode && selection.anchorNode.parentNode.classList.contains('my-highlight')) {
+                selection.removeAllRanges();
+                return;
+            }
+
             // اعمال هایلایت با رنگ فعال
             applyHighlightToDOM(selectedText, activeColor);
             
@@ -50,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('myHighlights_v2', JSON.stringify(savedHighlights));
             }
             
-            // پاک کردن انتخاب
             selection.removeAllRanges();
         }
     }
@@ -62,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
             NodeFilter.SHOW_TEXT,
             {
                 acceptNode: function(node) {
-                    // از هایلایت کردن متن‌های داخل نوار ابزار و اسکریپت‌ها خودداری کن
                     if (node.parentNode.closest('#highlight-toolbar') || node.parentNode.tagName === 'SCRIPT' || node.parentNode.tagName === 'STYLE') {
                         return NodeFilter.FILTER_REJECT;
                     }
@@ -95,7 +98,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     span.style.backgroundColor = color;
                     span.style.borderRadius = '3px';
                     span.style.padding = '0 2px';
+                    span.style.cursor = 'pointer';
                     span.textContent = part;
+                    
+                    // اضافه کردن قابلیت حذف تکی
+                    attachRemoveHandler(span);
+                    
                     fragment.appendChild(span);
                 } else {
                     fragment.appendChild(document.createTextNode(part));
@@ -106,7 +114,66 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ۶. دکمه پاک کردن همه هایلایت‌ها
+    // ۶. تابع جدید: اضافه کردن قابلیت حذف تکی (Long Press / Right Click)
+    function attachRemoveHandler(element) {
+        let pressTimer = null;
+
+        // شروع نگه داشتن (موبایل)
+        element.addEventListener('touchstart', function(e) {
+            pressTimer = setTimeout(() => {
+                removeSingleHighlight(element);
+                if (navigator.vibrate) navigator.vibrate(50); // لرزش کوتاه
+            }, 600); // ۶۰۰ میلی‌ثانیه نگه داشتن
+        }, { passive: true });
+
+        // لغو نگه داشتن اگر انگشت برداشته شد یا حرکت کرد
+        element.addEventListener('touchend', function() {
+            clearTimeout(pressTimer);
+        });
+        element.addEventListener('touchmove', function() {
+            clearTimeout(pressTimer);
+        });
+
+        // کلیک راست (کامپیوتر)
+        element.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            removeSingleHighlight(element);
+        });
+    }
+
+    // ۷. تابع حذف یک هایلایت خاص
+    function removeSingleHighlight(element) {
+        const textToRemove = element.textContent;
+        
+        // گرفتن رنگ فعلی برای نمایش در پیغام
+        const currentColor = element.style.backgroundColor;
+        
+        // تبدیل رنگ به نام فارسی برای پیغام زیباتر
+        const colorNames = {
+            'rgb(167, 201, 87)': 'سبز پسته‌ای',
+            'rgb(253, 224, 71)': 'زرد',
+            'rgb(255, 138, 138)': 'قرمز روشن',
+            'rgb(144, 224, 239)': 'آبی آسمانی',
+            'rgb(255, 183, 77)': 'نارنجی روشن'
+        };
+        const colorName = colorNames[currentColor] || 'این رنگ';
+
+        if (confirm(`آیا می‌خواهید هایلایت ${colorName} متن «${textToRemove}» را پاک کنید؟`)) {
+            // حذف از حافظه مرورگر
+            savedHighlights = savedHighlights.filter(item => item.text !== textToRemove);
+            localStorage.setItem('myHighlights_v2', JSON.stringify(savedHighlights));
+
+            // حذف از DOM (تبدیل span به متن ساده)
+            const parent = element.parentNode;
+            const textNode = document.createTextNode(textToRemove);
+            parent.replaceChild(textNode, element);
+            
+            // ادغام متن‌های همسایه برای جلوگیری از به‌هم‌ریختگی
+            parent.normalize();
+        }
+    }
+
+    // ۸. دکمه پاک کردن همه هایلایت‌ها
     document.getElementById('clear-highlights').addEventListener('click', function() {
         if (confirm('آیا مطمئن هستید که می‌خواهید همه هایلایت‌ها را پاک کنید؟')) {
             localStorage.removeItem('myHighlights_v2');
@@ -115,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ۷. استایل‌های نوار ابزار
+// ۹. استایل‌های نوار ابزار
 const style = document.createElement('style');
 style.innerHTML = `
     #highlight-toolbar {
@@ -149,8 +216,11 @@ style.innerHTML = `
     }
     .my-highlight {
         cursor: pointer;
+        transition: opacity 0.2s;
     }
-    /* فاصله دادن به محتوای سایت تا زیر نوار ابزار نره */
+    .my-highlight:active {
+        opacity: 0.6;
+    }
     body {
         padding-top: 50px !important;
     }
