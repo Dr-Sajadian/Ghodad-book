@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کتابخانه دروس غدد</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+            background-attachment: fixed;
+            font-family: Vazirmatn, Tahoma, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* افکت‌های نورانی پس‌زمینه */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+        }
+        body::before {
+            width: 300px; height: 300px;
+            background: rgba(255, 255, 255, 0.6);
+            top: -50px; right: -50px;
+        }
+        body::after {
+            width: 400px; height: 400px;
+            background: rgba(56, 189, 248, 0.4);
+            bottom: -100px; left: -100px;
+        }
+
+        .header-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 900;
+            color: #0c4a6e;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(255,255,255,0.8);
+            z-index: 1;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #0369a1;
+            margin-bottom: 40px;
+            z-index: 1;
+        }
+
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 400px;
+            z-index: 1;
+        }
+
+        /* کارت‌های اصلی */
+        .main-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            border-radius: 24px;
+            padding: 30px 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.35s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .main-card:hover {
+            background: rgba(255, 255, 255, 0.75);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.25);
+            border-color: #ffffff;
+        }
+
+        /* آیکون */
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-moghaddamat {
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+        }
+
+        .icon-pharma {
+            background: linear-gradient(135deg, #a7c957, #588157);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #0c4a6e;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.6;
+            max-width: 280px;
+        }
+
+        .card-badge {
+            font-size: 11px;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-top: 5px;
+        }
+
+        .badge-active {
+            color: #0369a1;
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.6);
+        }
+
+        .badge-soon {
+            color: #64748b;
+            background: rgba(100, 116, 139, 0.1);
+            border: 1px solid rgba(100, 116, 139, 0.3);
+        }
+
+        .footer-text {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #0369a1;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* استایل اسکرول‌بار */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.4); border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <h1 class="header-title">📚 کتابخانه دروس غدد</h1>
+    <p class="subtitle">یک بخش را برای مطالعه انتخاب کنید</p>
+
+    <div class="cards-container">
+
+        <!-- کارت مقدمات غدد -->
+        <a href="moghaddamat.html" class="main-card">
+            <div class="icon-circle icon-moghaddamat">🧬</div>
+            <div class="card-title">مقدمات غدد</div>
+            <div class="card-desc">
+                فیزیوپاتولوژی، آدنوهیپوفیز، تیروئید، دیابت، آدرنال و غدد جنسی
+            </div>
+            <div class="card-badge badge-active">۱۷ جلسه در دسترس</div>
+        </a>
+
+        <!-- کارت فارماکولوژی غدد -->
+        <a href="pharmacology.html" class="main-card">
+            <div class="icon-circle icon-pharma">💊</div>
+            <div class="card-title">فارماکولوژی غدد</div>
+            <div class="card-desc">
+                داروهای مؤثر بر غدد درون‌ریز و متابولیسم
+            </div>
+            <div class="card-badge badge-soon">به زودی</div>
+        </a>
+
+    </div>
+
+    <p class="footer-text">ساخته شده با ❤️ برای دانشجویان پزشکی</p>
+
+</body>
+</html>
