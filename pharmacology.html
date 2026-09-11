@@ -6,6 +6,8 @@
     <title>فارماکولوژی غدد</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
             background-attachment: fixed;
@@ -14,64 +16,233 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
-            margin: 0;
-            text-align: center;
+            padding: 30px 20px;
+            overflow-x: hidden;
         }
 
-        .empty-box {
+        /* افکت‌های نورانی پس‌زمینه */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+        }
+        body::before {
+            width: 300px; height: 300px;
+            background: rgba(255, 255, 255, 0.6);
+            top: -50px; right: -50px;
+        }
+        body::after {
+            width: 400px; height: 400px;
+            background: rgba(56, 189, 248, 0.4);
+            bottom: -100px; left: -100px;
+        }
+
+        /* هدر */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            z-index: 1;
+        }
+
+        .header-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a7c957, #588157);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            box-shadow: 0 6px 15px rgba(88, 129, 87, 0.3);
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #0c4a6e;
+            text-shadow: 0 2px 5px rgba(255,255,255,0.8);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #0369a1;
+            margin-bottom: 30px;
+            z-index: 1;
+        }
+
+        /* کانتینر کارت‌ها */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1;
+        }
+
+        /* کارت‌ها */
+        .card {
             background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1.5px solid rgba(255, 255, 255, 0.85);
-            border-radius: 24px;
-            padding: 40px 30px;
-            max-width: 400px;
+            border-radius: 20px;
+            padding: 18px 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.35s ease;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
         }
 
-        .icon {
-            font-size: 60px;
-            margin-bottom: 15px;
+        .card:hover {
+            background: rgba(255, 255, 255, 0.75);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.25);
+            border-color: #ffffff;
         }
 
-        h1 {
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+            background: linear-gradient(135deg, #a7c957, #588157); /* تم سبز برای فارما */
+        }
+
+        .card-content {
+            flex: 1;
+            text-align: right;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 900;
             color: #0c4a6e;
-            font-size: 22px;
-            margin: 10px 0;
+            line-height: 1.5;
         }
 
-        p {
-            color: #334155;
-            font-size: 14px;
-            line-height: 1.8;
+        .card-arrow {
+            color: #588157;
+            font-size: 20px;
+            font-weight: bold;
+            transition: transform 0.3s;
         }
 
+        .card:hover .card-arrow {
+            transform: translateX(-5px);
+        }
+
+        /* دکمه بازگشت */
         .back-btn {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 10px 25px;
-            background: linear-gradient(135deg, #38bdf8, #0284c7);
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 35px;
+            padding: 12px 28px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            color: #0c4a6e;
             text-decoration: none;
             border-radius: 25px;
             font-weight: bold;
             font-size: 14px;
-            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
-            transition: transform 0.2s;
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            z-index: 1;
         }
 
         .back-btn:hover {
+            background: rgba(255, 255, 255, 0.85);
             transform: translateY(-2px);
         }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.4); border-radius: 4px; }
     </style>
 </head>
 <body>
-    <div class="empty-box">
-        <div class="icon">💊</div>
-        <h1>فارماکولوژی غدد</h1>
-        <p>این بخش به زودی با جلسات کامل فارماکولوژی غدد به‌روزرسانی خواهد شد.</p>
-        <a href="index.html" class="back-btn">↩ بازگشت به خانه</a>
+
+    <div class="header">
+        <div class="header-icon">💊</div>
+        <h1 class="header-title">فارماکولوژی غدد</h1>
     </div>
+
+    <p class="subtitle">منابع مورد نظر را انتخاب کنید</p>
+
+    <div class="container">
+
+        <!-- هورمون جنسی -->
+        <a href="gonadal-hormones-tree-20.html" class="card">
+            <div class="card-icon">🧬</div>
+            <div class="card-content">
+                <div class="card-title">هورمون جنسی</div>
+            </div>
+            <div class="card-arrow">‹</div>
+        </a>
+
+        <!-- تیروئید -->
+        <a href="thyroid-pharmacology-tree-1.html" class="card">
+            <div class="card-icon">🦋</div>
+            <div class="card-content">
+                <div class="card-title">تیروئید</div>
+            </div>
+            <div class="card-arrow">‹</div>
+        </a>
+
+        <!-- دیابت -->
+        <a href="diabetes-pharmacology-tree.html" class="card">
+            <div class="card-icon">🩸</div>
+            <div class="card-content">
+                <div class="card-title">دیابت</div>
+            </div>
+            <div class="card-arrow">‹</div>
+        </a>
+
+        <!-- کورتیکواستروئید -->
+        <a href="corticosteroids-pharmacology-tree.html" class="card">
+            <div class="card-icon">💊</div>
+            <div class="card-content">
+                <div class="card-title">کورتیکواستروئید</div>
+            </div>
+            <div class="card-arrow">‹</div>
+        </a>
+
+        <!-- هیپوفیز -->
+        <a href="hypophysis-pharmacology-tree.html" class="card">
+            <div class="card-icon">🧠</div>
+            <div class="card-content">
+                <div class="card-title">هیپوفیز</div>
+            </div>
+            <div class="card-arrow">‹</div>
+        </a>
+
+        <!-- مرور کل -->
+        <a href="pharmacology-total-review-tree.html" class="card">
+            <div class="card-icon">📚</div>
+            <div class="card-content">
+                <div class="card-title">مرور کل فارماکولوژی غدد</div>
+            </div>
+            <div class="card-arrow">‹</div>
+        </a>
+
+    </div>
+
+    <a href="index.html" class="back-btn">↩ بازگشت به خانه</a>
+
 </body>
 </html>
