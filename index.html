@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>کتابخانه دروس غدد</title>
+    <title>کتابخانه دروس پزشکی</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,8 +16,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            padding: 30px 20px;
             overflow-x: hidden;
         }
 
@@ -41,10 +40,10 @@
 
         .header-title {
             text-align: center;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 900;
             color: #0c4a6e;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-shadow: 0 2px 5px rgba(255,255,255,0.8);
             z-index: 1;
         }
@@ -53,106 +52,102 @@
             text-align: center;
             font-size: 14px;
             color: #0369a1;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             z-index: 1;
         }
 
         .cards-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             z-index: 1;
         }
 
+        /* کارت‌های اصلی کورس‌ها */
         .main-card {
             background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1.5px solid rgba(255, 255, 255, 0.85);
-            border-radius: 24px;
-            padding: 30px 20px;
+            border-radius: 22px;
+            padding: 22px 20px;
             text-decoration: none;
             color: inherit;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
             transition: all 0.35s ease;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            text-align: center;
         }
 
-        .main-card:hover {
+        .main-card:not(.disabled):hover {
             background: rgba(255, 255, 255, 0.75);
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-4px);
             box-shadow: 0 15px 35px rgba(14, 165, 233, 0.25);
             border-color: #ffffff;
         }
 
+        .main-card.disabled {
+            opacity: 0.55;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
         .icon-circle {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 40px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            font-size: 28px;
+            flex-shrink: 0;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
         }
 
-        .icon-moghaddamat {
-            background: linear-gradient(135deg, #38bdf8, #0284c7);
-        }
+        .icon-ghodad    { background: linear-gradient(135deg, #38bdf8, #0284c7); }
+        .icon-gooaresh  { background: linear-gradient(135deg, #a7c957, #588157); }
+        .icon-rheum     { background: linear-gradient(135deg, #f472b6, #be185d); }
+        .icon-hema      { background: linear-gradient(135deg, #ff8a8a, #c1121f); }
 
-        .icon-pharma {
-            background: linear-gradient(135deg, #a7c957, #588157);
-        }
-
-        .icon-pathology {
-            background: linear-gradient(135deg, #ff8a8a, #c1121f);
-        }
+        .card-content { flex: 1; text-align: right; }
 
         .card-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
             color: #0c4a6e;
+            margin-bottom: 4px;
         }
 
         .card-desc {
-            font-size: 13px;
-            color: #334155;
+            font-size: 12px;
+            color: #475569;
             line-height: 1.6;
-            max-width: 280px;
         }
 
-        .card-badge {
-            font-size: 11px;
+        .card-arrow {
+            color: #0284c7;
+            font-size: 22px;
             font-weight: bold;
-            padding: 5px 12px;
-            border-radius: 20px;
-            margin-top: 5px;
+            transition: transform 0.3s;
         }
 
-        .badge-active {
-            color: #0369a1;
-            background: rgba(56, 189, 248, 0.2);
-            border: 1px solid rgba(56, 189, 248, 0.6);
-        }
+        .main-card:hover .card-arrow { transform: translateX(-5px); }
 
+        .badge {
+            font-size: 10px;
+            font-weight: bold;
+            padding: 3px 9px;
+            border-radius: 12px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
         .badge-soon {
             color: #64748b;
-            background: rgba(100, 116, 139, 0.1);
+            background: rgba(100, 116, 139, 0.15);
             border: 1px solid rgba(100, 116, 139, 0.3);
-        }
-
-        .footer-text {
-            margin-top: 40px;
-            font-size: 12px;
-            color: #0369a1;
-            text-align: center;
-            z-index: 1;
         }
 
         ::-webkit-scrollbar { width: 8px; }
@@ -162,44 +157,50 @@
 </head>
 <body>
 
-    <h1 class="header-title">📚 کتابخانه دروس غدد</h1>
-    <p class="subtitle">یک بخش را برای مطالعه انتخاب کنید</p>
+    <h1 class="header-title">📚 کتابخانه دروس پزشکی</h1>
+    <p class="subtitle">یک کورس را برای مطالعه انتخاب کنید</p>
 
     <div class="cards-container">
 
-        <!-- کارت مقدمات غدد -->
-        <a href="moghaddamat.html" class="main-card">
-            <div class="icon-circle icon-moghaddamat">🧬</div>
-            <div class="card-title">مقدمات غدد</div>
-            <div class="card-desc">
-                فیزیوپاتولوژی، آدنوهیپوفیز، تیروئید، دیابت، آدرنال و غدد جنسی
+        <!-- کورس غدد -->
+        <a href="ghodad.html" class="main-card">
+            <div class="icon-circle icon-ghodad">🧬</div>
+            <div class="card-content">
+                <div class="card-title">کورس غدد</div>
+                <div class="card-desc">مقدمات، فارماکولوژی و پاتولوژی غدد</div>
             </div>
-            <div class="card-badge badge-active">۱۷ جلسه در دسترس</div>
+            <div class="card-arrow">‹</div>
         </a>
 
-        <!-- کارت فارماکولوژی غدد -->
-        <a href="pharmacology.html" class="main-card">
-            <div class="icon-circle icon-pharma">💊</div>
-            <div class="card-title">فارماکولوژی غدد</div>
-            <div class="card-desc">
-                داروهای مؤثر بر غدد درون‌ریز و متابولیسم
+        <!-- کورس گوارش -->
+        <a href="gooaresh.html" class="main-card">
+            <div class="icon-circle icon-gooaresh">🫀</div>
+            <div class="card-content">
+                <div class="card-title">کورس گوارش</div>
+                <div class="card-desc">مقدمات، پاتولوژی، فارماکولوژی و کبد</div>
             </div>
-            <div class="card-badge badge-active">۶ منبع در دسترس</div>
+            <div class="card-arrow">‹</div>
         </a>
 
-        <!-- کارت پاتولوژی غدد -->
-        <a href="pathology.html" class="main-card">
-            <div class="icon-circle icon-pathology">🔬</div>
-            <div class="card-title">پاتولوژی غدد</div>
-            <div class="card-desc">
-                ضایعات پاتولوژیک غدد درون‌ریز و تومورهای مربوطه
+        <!-- کورس روماتولوژی -->
+        <div class="main-card disabled">
+            <div class="icon-circle icon-rheum">🦴</div>
+            <div class="card-content">
+                <div class="card-title">کورس روماتولوژی <span class="badge badge-soon">به زودی</span></div>
+                <div class="card-desc">بیماری‌های روماتیسمی و خودایمنی</div>
             </div>
-            <div class="card-badge badge-active">۲ منبع در دسترس</div>
-        </a>
+        </div>
+
+        <!-- کورس هماتولوژی -->
+        <div class="main-card disabled">
+            <div class="icon-circle icon-hema">🩸</div>
+            <div class="card-content">
+                <div class="card-title">کورس هماتولوژی <span class="badge badge-soon">به زودی</span></div>
+                <div class="card-desc">بیماری‌های خونی و انعقاد</div>
+            </div>
+        </div>
 
     </div>
-
-    <p class="footer-text">ساخته شده با ❤️ برای دانشجویان پزشکی</p>
 
 </body>
 </html>
