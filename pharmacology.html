@@ -5,7 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فارماکولوژی غدد</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    <style>
+    /* کانتینر دکمه‌های بازگشت */
+.nav-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 35px;
+    z-index: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    color: #0c4a6e;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 13px;
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.85);
+    transform: translateY(-2px);
+}
+
+.back-btn.primary {
+    background: linear-gradient(135deg, #38bdf8, #0284c7);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.back-btn.primary:hover {
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.4);
+}
+    <style/>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
@@ -242,7 +283,9 @@
 
     </div>
 
-    <a href="index.html" class="back-btn">↩ بازگشت به خانه</a>
-
+    <div class="nav-buttons">
+    <a href="ghodad.html" class="back-btn primary">↩ بازگشت به کورس غدد</a>
+    <a href="index.html" class="back-btn">🏠 خانه</a>
+    </div>
 </body>
 </html>
